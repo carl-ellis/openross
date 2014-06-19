@@ -1,0 +1,15 @@
+ld/
+bin/
+lib/
+dist/
+include/
+build/
+_trial_temp/
+openross/twisted/plugins/dropin.cache
+/openross.egg-info
+.idea/
+*.pyc
+*.swp
+*.pid
+twistd.log
+MANIFEST.in

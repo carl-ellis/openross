@@ -1,0 +1,28 @@
+http {
+    sendfile        on;
+
+    upstream bobrosstwisted {
+	    server 127.0.0.1:5500 max_fails=0;
+    }
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root /srv/http/cache;
+            rewrite ^/([0-9]+)/([0-9]+)/([a-z]+)/(.*)\.(.*)$ /$4_$1x$2_$3.$5 break;
+            expires 1w;
+            try_files $uri @bobross;
+        }
+        location @borbross {
+            rewrite ^/(.*)\_([0-9]+)x([0-9]+)_([a-z]+)\.(.*)$ /$1.$5?width=$2&height=$3&mode=$4 break;
+            proxy_redirect off;
+            proxy_buffering off;
+            proxy_pass http://bobrosstwisted;
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /srv/http;
+        }
+    }
+}
